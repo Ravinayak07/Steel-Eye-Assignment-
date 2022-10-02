@@ -10,7 +10,6 @@
 ## SOLUTIONS:
 ### 1. Explain what the simple List component does.
 - Used to display/render data in an ordered format. The map() function is used for traversing the lists.
-- Lists are handy when it comes to developing the UI of any website. Lists are mainly used for displaying menus on a website, for example, the navbar menu. In conventional JavaScript, we can use arrays for creating lists. We can produce lists in React in a similar manner as we do in standard JavaScript.
 - Ex: 
 ```
 const SimpleList = () => (
@@ -19,8 +18,9 @@ const SimpleList = () => (
 {item}
 ; })}
 );
-
 ```
+- The List Component in the given code renders a Unordered List and using the SingleListItem component, props like onClickHandler, text, index and isSelected are called every time using map function. And It returns a Text which background color depending on which item is selected.
+
 ### 2. What problems / warnings are there with code?
 #### A) In the useState() hook, the first parameter should be the variable representing current state and second parameter should be the set function that is used to update the state of the variable:
 > Incorrect:
