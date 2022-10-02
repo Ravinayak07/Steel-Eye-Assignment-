@@ -8,13 +8,42 @@
 3. Please fix, optimize, and/or modify the component as much as you think is necessary.
 
 ## SOLUTIONS:
->1 Explain what the simple List component does.
+### 1. Explain what the simple List component does.
 ```
 ```
->2 What problems / warnings are there with code?
+### 2. What problems / warnings are there with code?
+#### A) In the useState() hook, the first parameter should be the variable representing current state and second parameter should be the set function that is used to update the state of the variable:
+> Incorrect:
 ```
+const [setSelectedIndex, selectedIndex] = useState();
 ```
->3 Please fix, optimize, and/or modify the component as much as you think is necessary.
+> Correct:
+```
+const [selectedIndex, setSelectedIndex] = useState();
+```
+
+#### B) Error in defining WrappedListComponent.propTypes - it would be arrayOf instead of shapeOf.
+- In propsTypes of WrappedListComponent, we are using depricated way to call propTypes validator's directly which is incorrect after react version 15.
+- So, instead of array  and shapeOf we have to use arrayOf and shape respectively:
+> Incorrect:
+```
+WrappedListComponent.propTypes = {
+  items: PropTypes.array(PropTypes.shapeOf({
+    text: PropTypes.string.isRequired,
+  })),
+};
+```
+> Correct:
+```
+WrappedListComponent.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+      text: PropTypes.string.isRequired,
+    })
+  ),
+};
+```
+
+### 3. Please fix, optimize, and/or modify the component as much as you think is necessary.
 ```
 import React, { useState, useEffect, memo } from "react";
 import PropTypes from "prop-types";
