@@ -11,12 +11,15 @@
 ### 1. Explain what the simple List component does.
 - Used to display/render data in an ordered format. The map() function is used for traversing the lists.
 - Ex: 
-```
-const SimpleList = () => (
+```javascript
+const list = ['a', 'b', 'c'];
 
-{['x', 'y', 'z'].map(function(item) { return
-{item}
-; })}
+const SimpleList = () => (
+  <ul>
+    {list.map(function(item) {
+      return <li key={item}>{item}</li>;
+    })}
+  </ul>
 );
 ```
 - The List Component in the given code renders a Unordered List and using the SingleListItem component, props like onClickHandler, text, index and isSelected are called every time using map function. And It returns a Text which background color depending on which item is selected.
@@ -24,11 +27,11 @@ const SimpleList = () => (
 ### 2. What problems / warnings are there with code?
 #### A) In the useState() hook, the first parameter should be the variable representing current state and second parameter should be the set function that is used to update the state of the variable:
 > Incorrect:
-```
+```javascript
 const [setSelectedIndex, selectedIndex] = useState();
 ```
 > Correct:
-```
+```javascript
 const [selectedIndex, setSelectedIndex] = useState();
 ```
 
@@ -36,7 +39,7 @@ const [selectedIndex, setSelectedIndex] = useState();
 - In propsTypes of WrappedListComponent, we are using depricated way to call propTypes validator's directly which is incorrect after react version 15.
 - So, instead of array  and shapeOf we have to use arrayOf and shape respectively:
 > Incorrect:
-```
+```javascript
 WrappedListComponent.propTypes = {
   items: PropTypes.array(PropTypes.shapeOf({
     text: PropTypes.string.isRequired,
@@ -44,7 +47,7 @@ WrappedListComponent.propTypes = {
 };
 ```
 > Correct:
-```
+```javascript
 WrappedListComponent.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
       text: PropTypes.string.isRequired,
@@ -55,13 +58,13 @@ WrappedListComponent.propTypes = {
 #### C) In WrappedListComponent.defaultProps, null items cannot be mapped.
 - To correct, this error  we initialise the array items with some default values.
 > Incorrect:
-```
+```javascript
 WrappedListComponent.defaultProps = {
   items: null,
 };
 ```
 > Correct:
-```
+```javascript
 WrappedListComponent.defaultProps = {
   items: [
     { text: "STEEL EYE", index: 1 },
@@ -73,7 +76,7 @@ WrappedListComponent.defaultProps = {
 #### D) Unique key prop is missing for List items
 - The unique key prop is not provided to map. So it will show a Warning: Each child in a list should have a unique "key" prop.
 > Incoorect:
-```
+```javascript
  <ul style={{ textAlign: 'left' }}>
       {items.map((item, index) => (
         <SingleListItem
@@ -86,7 +89,7 @@ WrappedListComponent.defaultProps = {
   </ul>
 ```
 > Correct:
-```
+```javascript
     <ul style={{ textAlign: "left" }}>
       {items.map((item, index) => (
         <SingleListItem
@@ -102,14 +105,14 @@ WrappedListComponent.defaultProps = {
 #### E) onClick events should have a function reference instead of function call
 - When a parameter is to be passed in an event handler, it needs to be wrapped with an arrow function.
 > Incorrect:
-```
+```javascript
    <li style={{ backgroundColor: isSelected ? "green" : "red" }}
         onClick={onClickHandler(index)}>
        {text}
    </li>
 ```
 > Correct: 
-```
+```javascript
     <li style={{ backgroundColor: isSelected ? "green" : "red" }}
         onClick={() => onClickHandler(index)}>
       {text}
@@ -121,14 +124,14 @@ WrappedListComponent.defaultProps = {
 - PropType of isSelected is boolean but here passed proptype is number. so we have to provide bool values
 - Also There should be a function reference instead of call
 >Incorrect:
-```
+```javascript
     <li
       style={{ backgroundColor: isSelected ? 'green' : 'red'}}
       onClick={onClickHandler(index)}
     >
 ```
 > Correct:
-```
+```javascript
     <li
       style={{ backgroundColor: isSelected ? "green" : "red" }}
       onClick={() => onClickHandler(Boolean(index))} 
@@ -136,7 +139,7 @@ WrappedListComponent.defaultProps = {
 ```
 
 ### 3. Please fix, optimize, and/or modify the component as much as you think is necessary.
-```
+```javascript
 import React, { useState, useEffect, memo } from "react";
 import PropTypes from "prop-types";
 
