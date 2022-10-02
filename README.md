@@ -9,7 +9,17 @@
 
 ## SOLUTIONS:
 ### 1. Explain what the simple List component does.
+- Used to display/render data in an ordered format. The map() function is used for traversing the lists.
+- Lists are handy when it comes to developing the UI of any website. Lists are mainly used for displaying menus on a website, for example, the navbar menu. In conventional JavaScript, we can use arrays for creating lists. We can produce lists in React in a similar manner as we do in standard JavaScript.
+- Ex: 
 ```
+const SimpleList = () => (
+
+{['x', 'y', 'z'].map(function(item) { return
+{item}
+; })}
+);
+
 ```
 ### 2. What problems / warnings are there with code?
 #### A) In the useState() hook, the first parameter should be the variable representing current state and second parameter should be the set function that is used to update the state of the variable:
@@ -135,10 +145,7 @@ const WrappedSingleListItem = ({ index, isSelected, onClickHandler, text }) => {
   return (
     <li
       style={{ backgroundColor: isSelected ? "green" : "red" }}
-      onClick={() => onClickHandler(index)}
-      //onClick={onClickHandler(index)} //There should be a function reference instead of call
-      //onClick={() => onClickHandler(Boolean(index))} //correction
-    >
+      onClick={() => onClickHandler(Boolean(index))}>
       {text}
     </li>
   );
@@ -155,20 +162,16 @@ const SingleListItem = memo(WrappedSingleListItem);
 
 // List Component
 const WrappedListComponent = ({ items }) => {
-  //const [selectedIndex, setSelectedIndex] = useState(''); //correction
-  const [selectedIndex, setSelectedIndex] = useState();  //correction
-  //const [selectedIndex, setSelectedIndex] = useState(false);  //correction
+  const [selectedIndex, setSelectedIndex] = useState(''); 
 
   useEffect(() => {
-    setSelectedIndex(null); //correction
-    //setSelectedIndex(null);
+    setSelectedIndex(null);
+
   }, [items]);
 
   const handleClick = (index) => {
-    setSelectedIndex(index);
-    //setSelectedIndex(true);
-    //setSelectedIndex(Boolean(index)); //correction
-    //console.log("This is index: " + index); //correction
+    setSelectedIndex((index));
+
   };
 
   return (
@@ -178,11 +181,8 @@ const WrappedListComponent = ({ items }) => {
           onClickHandler={() => handleClick(index)}
           text={item.text}
           index={index}
-          key={index} //correction
-          //isSelected={selectedIndex}
+          key={index} 
           isSelected={selectedIndex === index}
-          //isSelected={Boolean(selectedIndex)}
-          //isSelected={selectedIndex ? true : false}
         />
       ))}
     </ul>
@@ -191,9 +191,7 @@ const WrappedListComponent = ({ items }) => {
 
 WrappedListComponent.propTypes = {
   items: PropTypes.arrayOf(
-    //correction: array to arrayOf
     PropTypes.shape({
-      //correction: shape to shapeOf
       text: PropTypes.string.isRequired,
     })
   ),
@@ -204,29 +202,21 @@ WrappedListComponent.defaultProps = {
     { text: "STEEL EYE", index: 1 },
     { text: "FRONTEND ENGINEER", index: 2 },
     { text: "ASSIGNMENT", index: 3 },
-  ], //correction
+  ], 
 };
 
-
-/*
-WrappedListComponent.defaultProps = {
-  items: [{ text: "First Item" }, { text: "Second Item" }],
-};
-*/
-
-/*
-WrappedListComponent.defaultProps = {
-items: [
-{ index: 1, text: "Ujjawal" },
-{ index: 2, text: "Shivam" }
-]
-};
-*/
 
 const List = memo(WrappedListComponent);
 
 export default List;
 
-
-
 ```
+
+## OUTPUT:
+> WHEN NOT CLICKED:
+
+<img src="./output.png"/>
+
+> WHEN CLICKED EACH ITEM:
+
+<img src="./clicked.png"/>
