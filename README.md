@@ -42,6 +42,88 @@ WrappedListComponent.propTypes = {
   ),
 };
 ```
+#### C) In WrappedListComponent.defaultProps, null items cannot be mapped.
+- To correct, this error  we initialise the array items with some default values.
+> Incorrect:
+```
+WrappedListComponent.defaultProps = {
+  items: null,
+};
+```
+> Correct:
+```
+WrappedListComponent.defaultProps = {
+  items: [
+    { text: "STEEL EYE", index: 1 },
+    { text: "FRONTEND ENGINEER", index: 2 },
+    { text: "ASSIGNMENT", index: 3 },
+  ], 
+};
+```
+#### D) Unique key prop is missing for List items
+- The unique key prop is not provided to map. So it will show a Warning: Each child in a list should have a unique "key" prop.
+> Incoorect:
+```
+ <ul style={{ textAlign: 'left' }}>
+      {items.map((item, index) => (
+        <SingleListItem
+          onClickHandler={() => handleClick(index)}
+          text={item.text}
+          index={index}
+          isSelected={selectedIndex}
+        />
+      ))}
+  </ul>
+```
+> Correct:
+```
+    <ul style={{ textAlign: "left" }}>
+      {items.map((item, index) => (
+        <SingleListItem
+          onClickHandler={() => handleClick(index)}
+          text={item.text}
+          index={index}
+          key={index} 
+          isSelected={selectedIndex}
+        />
+      ))}
+    </ul>
+```
+#### E) onClick events should have a function reference instead of function call
+- When a parameter is to be passed in an event handler, it needs to be wrapped with an arrow function.
+> Incorrect:
+```
+   <li style={{ backgroundColor: isSelected ? "green" : "red" }}
+        onClick={onClickHandler(index)}>
+       {text}
+   </li>
+```
+> Correct: 
+```
+    <li style={{ backgroundColor: isSelected ? "green" : "red" }}
+        onClick={() => onClickHandler(index)}>
+      {text}
+    </li>
+```
+
+### F) Passing incorrect propType value in isSelected.
+- Passing a number selectedIndex to isSelected which should be a bool
+- PropType of isSelected is boolean but here passed proptype is number. so we have to provide bool values
+- Also There should be a function reference instead of call
+>Incorrect:
+```
+    <li
+      style={{ backgroundColor: isSelected ? 'green' : 'red'}}
+      onClick={onClickHandler(index)}
+    >
+```
+> Correct:
+```
+    <li
+      style={{ backgroundColor: isSelected ? "green" : "red" }}
+      onClick={() => onClickHandler(Boolean(index))} 
+    >
+```
 
 ### 3. Please fix, optimize, and/or modify the component as much as you think is necessary.
 ```
